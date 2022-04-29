@@ -4,13 +4,15 @@ import { StyleSheet, Button, Text, TextInput, View } from 'react-native'
 
 export default function App() {
   const [goal, setGoal] = useState('')
-  const [content, setContent] = useState([])
+  const [contents, setContents] = useState([])
   const handleChange = (enteredText) => {
     // e.preventDefault()
     setGoal(enteredText)
   }
   const handleAdd = () => {
-    setContent(goal)
+    let newContent = { goal }
+    setContents((prevState) => [...prevState, newContent])
+    setGoal('')
   }
   return (
     <View style={styles.container}>
@@ -22,6 +24,12 @@ export default function App() {
           onChangeText={handleChange}
         />
         <Button title='Add' onPress={handleAdd} />
+      </View>
+      <View>
+        {contents &&
+          contents.map((content) => {
+            return <Text>{content.goal}</Text>
+          })}
       </View>
     </View>
   )
