@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Button, Text, TextInput, View } from 'react-native'
+import {
+  StyleSheet,
+  Button,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+} from 'react-native'
 
 export default function App() {
   let date = new Date()
@@ -13,7 +20,6 @@ export default function App() {
   // Will display time in 10:30:23 format
   // hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
   var formattedTime = hours + ':' + minutes.substr(-2) + ampm
-  console.log(formattedTime)
 
   const [goal, setGoal] = useState('')
   const [contents, setContents] = useState([])
@@ -23,12 +29,13 @@ export default function App() {
     setGoal(enteredText)
   }
   const handleAdd = () => {
-    let newContent = { goal, formattedTime }
+    let newContent = { goal, formattedTime, seconds }
     setContents((prevState) => [...prevState, newContent])
     setGoal('')
   }
   return (
     <View style={styles.container}>
+      <Text style={styles.head}>ENTER YOUR GOAL HERE!</Text>
       <View style={styles.screen}>
         <TextInput
           placeholder='Enter Your Goal'
@@ -38,23 +45,17 @@ export default function App() {
         />
         <Button title='Add' onPress={handleAdd} />
       </View>
-      <View>
+      <ScrollView>
         {contents &&
           contents.map((content) => {
             return (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginTop: 10,
-                }}
-              >
+              <View style={styles.listItem} key={content.seconds}>
                 <Text>{content.goal}</Text>
                 <Text>{content.formattedTime}</Text>
               </View>
             )
           })}
-      </View>
+      </ScrollView>
     </View>
   )
 }
@@ -65,6 +66,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     padding: 50,
+  },
+  head: {
+    textAlign: 'center',
+    marginVertical: 30,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   screen: {
     flexDirection: 'row',
@@ -77,10 +84,18 @@ const styles = StyleSheet.create({
     padding: 10,
     // marginBottom: 1,
     width: '80%',
+    marginVertical: 10,
   },
   button: {
     padding: 10,
     color: 'red',
     backgroundColor: 'green',
+  },
+  listItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+    backgroundColor: 'rgba(200, 200, 200, 0.7)',
+    padding: 10,
   },
 })
