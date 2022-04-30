@@ -9,7 +9,7 @@ import {
 const GoalList = ({ goal, time, id, onDelete }) => {
   const [deleteGoal, setDeleteGoal] = useState(false)
   return (
-    <TouchableOpacity underlayColor='#ccc' onPress={onDelete.bind(this, id)}>
+    <TouchableOpacity onPress={onDelete.bind(this, id)}>
       <View style={styles.listItem} key={id}>
         <Text>{goal}</Text>
         <Text>{time}</Text>

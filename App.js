@@ -24,6 +24,7 @@ export default function App() {
   var formattedTime = hours + ':' + minutes.substr(-2) + ampm
 
   const [contents, setContents] = useState([])
+  const [isShowModal, setIsShowModal] = useState(false)
   const handleAdd = ([goal, setGoal]) => {
     let newContent = { goal, formattedTime, id: seconds }
     setContents((prevState) => [...prevState, newContent])
@@ -40,8 +41,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.head}>ENTER YOUR GOAL HERE!</Text>
-      <GoalInput onAddGoal={handleAdd} />
+      <Button onPress={() => setIsShowModal(true)} title='Add Goal' />
+      {/* <Text style={styles.head}>ENTER YOUR GOAL HERE!</Text> */}
+      <GoalInput visible={isShowModal} onAddGoal={handleAdd} />
       {contents.length < 1 ? (
         <Text style={styles.info}>You don't have any goal yet</Text>
       ) : (
@@ -89,5 +91,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 })
