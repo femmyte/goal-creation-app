@@ -9,7 +9,8 @@ import {
   ScrollView,
   FlatList,
 } from 'react-native'
-
+import GoalList from './components/GoalList'
+import GoalInput from './components/GoalInput'
 export default function App() {
   let date = new Date()
   var hours = date.getHours()
@@ -22,14 +23,8 @@ export default function App() {
   // hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
   var formattedTime = hours + ':' + minutes.substr(-2) + ampm
 
-  const [goal, setGoal] = useState('')
   const [contents, setContents] = useState([])
-  // const date = new Date().getTime().toLocaleString()
-  const handleChange = (enteredText) => {
-    // e.preventDefault()
-    setGoal(enteredText)
-  }
-  const handleAdd = () => {
+  const handleAdd = ([goal, setGoal]) => {
     let newContent = { goal, formattedTime, seconds }
     setContents((prevState) => [...prevState, newContent])
     setGoal('')
@@ -37,22 +32,14 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.head}>ENTER YOUR GOAL HERE!</Text>
-      <View style={styles.screen}>
-        <TextInput
-          placeholder='Enter Your Goal'
-          style={styles.input}
-          value={goal}
-          onChangeText={handleChange}
-        />
-        <Button title='Add' onPress={handleAdd} />
-      </View>
+      <GoalInput onAddGoal={handleAdd} />
       <FlatList
         data={contents}
         renderItem={(itemData) => (
-          <View style={styles.listItem} key={itemData.item.id}>
-            <Text>{itemData.item.goal}</Text>
-            <Text>{itemData.item.formattedTime}</Text>
-          </View>
+          <GoalList
+            goal={itemData.item.goal}
+            time={itemData.item.formattedTime}
+          />
         )}
       />
       {/* <ScrollView>
@@ -82,30 +69,5 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  screen: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  input: {
-    borderColor: '#000',
-    borderWidth: 1,
-    padding: 10,
-    // marginBottom: 1,
-    width: '80%',
-    marginVertical: 10,
-  },
-  button: {
-    padding: 10,
-    color: 'red',
-    backgroundColor: 'green',
-  },
-  listItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 10,
-    backgroundColor: 'rgba(200, 200, 200, 0.7)',
-    padding: 10,
   },
 })
