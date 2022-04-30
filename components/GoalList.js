@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: 'rgba(200, 200, 200, 0.7)',
     padding: 10,
+    borderRadius: 8,
   },
   btn: {
     backgroundColor: 'transparent',

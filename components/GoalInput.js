@@ -15,24 +15,16 @@ const GoalInput = ({ onAddGoal, visible, onCancel }) => {
           value={goal}
           onChangeText={handleChange}
         />
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            // flex: 1,
-          }}
-        >
-          <Button
-            title='CANCEL'
-            color='red'
-            style={styles.button}
-            onPress={onCancel}
-          />
-          <Button
-            title='Add'
-            style={styles.button}
-            onPress={onAddGoal.bind(this, [goal, setGoal])}
-          />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button title='CANCEL' color='red' onPress={onCancel} />
+          </View>
+          <View style={styles.button}>
+            <Button
+              title='Add'
+              onPress={onAddGoal.bind(this, [goal, setGoal])}
+            />
+          </View>
         </View>
       </View>
     </Modal>
@@ -52,10 +44,16 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '80%',
     marginVertical: 10,
+    borderRadius: 8,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: '60%',
+    marginTop: 10,
   },
   button: {
-    padding: 10,
-    marginRight: 10,
+    width: '40%',
   },
   modal: {
     flex: 1,

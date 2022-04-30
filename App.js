@@ -55,7 +55,7 @@ export default function App() {
         onCancel={handleCancel}
       />
       {contents.length < 1 ? (
-        <Text style={styles.info}>You don't have any goal yet</Text>
+        <Text style={styles.info}>You have not set any goal yet</Text>
       ) : (
         <FlatList
           data={contents}
