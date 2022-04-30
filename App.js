@@ -26,9 +26,15 @@ export default function App() {
   const [contents, setContents] = useState([])
   const [isShowModal, setIsShowModal] = useState(false)
   const handleAdd = ([goal, setGoal]) => {
-    let newContent = { goal, formattedTime, id: seconds }
-    setContents((prevState) => [...prevState, newContent])
+    if (goal) {
+      let newContent = { goal, formattedTime, id: seconds }
+      setContents((prevState) => [...prevState, newContent])
+    }
     setGoal('')
+    setIsShowModal(false)
+  }
+  const handleCancel = () => {
+    setIsShowModal(false)
   }
   const handleDelete = (id) => {
     const newContent = contents.filter((content) => {
@@ -43,7 +49,11 @@ export default function App() {
     <View style={styles.container}>
       <Button onPress={() => setIsShowModal(true)} title='Add Goal' />
       {/* <Text style={styles.head}>ENTER YOUR GOAL HERE!</Text> */}
-      <GoalInput visible={isShowModal} onAddGoal={handleAdd} />
+      <GoalInput
+        visible={isShowModal}
+        onAddGoal={handleAdd}
+        onCancel={handleCancel}
+      />
       {contents.length < 1 ? (
         <Text style={styles.info}>You don't have any goal yet</Text>
       ) : (
