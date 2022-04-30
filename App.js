@@ -25,23 +25,38 @@ export default function App() {
 
   const [contents, setContents] = useState([])
   const handleAdd = ([goal, setGoal]) => {
-    let newContent = { goal, formattedTime, seconds }
+    let newContent = { goal, formattedTime, id: seconds }
     setContents((prevState) => [...prevState, newContent])
     setGoal('')
   }
+  const handleDelete = (id) => {
+    const newContent = contents.filter((content) => {
+      if (id != content.id) {
+        return content
+      }
+    })
+    setContents(newContent)
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.head}>ENTER YOUR GOAL HERE!</Text>
       <GoalInput onAddGoal={handleAdd} />
-      <FlatList
-        data={contents}
-        renderItem={(itemData) => (
-          <GoalList
-            goal={itemData.item.goal}
-            time={itemData.item.formattedTime}
-          />
-        )}
-      />
+      {contents.length < 1 ? (
+        <Text style={styles.info}>You don't have any goal yet</Text>
+      ) : (
+        <FlatList
+          data={contents}
+          renderItem={(itemData) => (
+            <GoalList
+              goal={itemData.item.goal}
+              time={itemData.item.formattedTime}
+              id={itemData.item.id}
+              onDelete={handleDelete}
+            />
+          )}
+        />
+      )}
       {/* <ScrollView>
         {contents &&
           contents.map((content) => {
@@ -68,6 +83,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 30,
     fontSize: 20,
+    fontWeight: 'bold',
+  },
+  info: {
+    marginVertical: 10,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 })

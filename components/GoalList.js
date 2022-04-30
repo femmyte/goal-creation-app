@@ -1,11 +1,21 @@
-import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
-const GoalList = ({ goal, time, id }) => {
+import React, { useState } from 'react'
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableHighlight,
+} from 'react-native'
+const GoalList = ({ goal, time, id, onDelete }) => {
+  const [deleteGoal, setDeleteGoal] = useState(false)
   return (
-    <View style={styles.listItem} key={id}>
-      <Text>{goal}</Text>
-      <Text>{time}</Text>
-    </View>
+    <TouchableOpacity underlayColor='#ccc' onPress={onDelete.bind(this, id)}>
+      <View style={styles.listItem} key={id}>
+        <Text>{goal}</Text>
+        <Text>{time}</Text>
+        {/* <Text>hello</Text> */}
+      </View>
+    </TouchableOpacity>
   )
 }
 
@@ -16,6 +26,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: 'rgba(200, 200, 200, 0.7)',
     padding: 10,
+  },
+  btn: {
+    backgroundColor: 'transparent',
   },
 })
 export default GoalList
